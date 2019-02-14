@@ -23,7 +23,7 @@ class PasswordResetTests(TestCase):
 
     def test_contains_form(self):
         form = self.response.context.get('form')
-        self.asserIsInstance(form, PasswordResetForm)
+        self.assertIsInstance(form, PasswordResetForm)
 
     def test_form_inputs(self):
         self.assertContains(self.response, '<input', 2)
@@ -43,7 +43,7 @@ class SuccessfulPasswordResetTests(TestCase):
         self.assertRedirects(self.response, url)
 
     def test_send_password_reset_email(self):
-        self.assertEqual(1, len(mail.outbox))
+        self.assertEquals(1, len(mail.outbox))
 
 
 class InvalidPasswordResetTests(TestCase):
@@ -57,4 +57,18 @@ class InvalidPasswordResetTests(TestCase):
         self.assertRedirects(self.response, url)
 
     def test_no_reset_email_sent(self):
-        self.assertEqual(0, len(mail.outbox))
+        self.assertEquals(0, len(mail.outbox))
+
+
+class PasswordResetDoneTests(TestCase):
+    def setUp(self):
+        url = reverse('password_reset_done')
+        self.response = self.client.get(url)
+
+    def test_status_code(self):
+        self.assertEquals(self.response.status_code, 200)
+
+    def test_view_function(self):
+        view = resolve('/reset/done/')
+        self.assertEquals(view.func.view_class,
+                          auth_views.PasswordResetDoneView)
