@@ -23,11 +23,14 @@ from boards import views
 urlpatterns = [
     # Home
     url(r'^$', views.home, name='home'),
+
     # Signup
     url(r'^signup/$', accounts_views.signup, name='signup'),
+
     # loginlogout
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
+
     # password reset
     url(r'^reset/$', auth_views.PasswordResetView.as_view(
         template_name='password_reset.html',
@@ -44,9 +47,11 @@ urlpatterns = [
     url(r'^reset/complete/$', auth_views.PasswordResetCompleteView.as_view(
         template_name='password_reset_complete.html'),
         name='password_reset_complete'),
+
     # board
     url(r'^boards/(?P<pk>\d+)/$', views.board_topics, name='board_topics'),
     url(r'^boards/(?P<pk>\d+)/new/$', views.new_topic, name='new_topic'),
+
     # admin
     url(r'^admin/', admin.site.urls),
 ]
