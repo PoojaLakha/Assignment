@@ -22,7 +22,7 @@ from boards import views
 
 urlpatterns = [
     # Home
-    url(r'^$', views.home, name='home'),
+    url(r'^$', views.BoardListView.as_view(), name='home'),
 
     # Signup
     url(r'^signup/$', accounts_views.signup, name='signup'),
